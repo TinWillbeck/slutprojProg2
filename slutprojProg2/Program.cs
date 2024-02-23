@@ -9,8 +9,7 @@ Raylib.BeginDrawing();
 
 while (Raylib.WindowShouldClose() == false)
 {
-    p.Movement();
-    // Level test = new();
+    p.Update();
     int [,] layout = 
         {
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
