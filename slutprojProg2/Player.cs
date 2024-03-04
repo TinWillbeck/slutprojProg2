@@ -10,12 +10,24 @@ public class Player
     float speed = 0.01f;
     float maxSpeed = 1f;
     Vector2 currentSpeed = Vector2.Zero;
-    float friction = 0.02f;
+    float friction = 0.002f;
 
 
 
     private void Movement()
     {
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_W))
+        {
+            currentSpeed.X += speed;
+            currentSpeed.Y += speed;
+        }
+
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_S))
+        {
+            currentSpeed.X -= carDirection.X;
+            currentSpeed.Y -= carDirection.Y;
+        }
+
         if (currentSpeed.Length() > 0)
         {
             if (Raylib.IsKeyDown(KeyboardKey.KEY_A))
@@ -38,22 +50,13 @@ public class Player
 
         // När rotationen ändras så ska riktningen bilen åker ändras,
 
-        carDirection.Y = MathF.Sin((MathF.PI / 180) * carRotation) * speed;
-        carDirection.X = MathF.Cos((MathF.PI / 180) * carRotation) * speed;
+        carDirection.Y = MathF.Sin((MathF.PI / 180) * carRotation);
+        carDirection.X = MathF.Cos((MathF.PI / 180) * carRotation);
         
-        if (Raylib.IsKeyDown(KeyboardKey.KEY_W))
-        {
-            currentSpeed.X += carDirection.X;
-            currentSpeed.Y += carDirection.Y;
-        }
+        currentSpeed.X = carDirection.X;
+        currentSpeed.Y = carDirection.Y;
 
-        if (Raylib.IsKeyDown(KeyboardKey.KEY_S))
-        {
-            currentSpeed.X -= carDirection.X;
-            currentSpeed.Y -= carDirection.Y;
-        }
-
-        Console.WriteLine(currentSpeed);
+        Console.WriteLine(carDirection);
 
 
         if(Raylib.IsKeyDown(KeyboardKey.KEY_SPACE))
