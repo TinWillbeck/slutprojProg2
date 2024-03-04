@@ -7,28 +7,26 @@ public class Player
     Vector2 carDirection = new();
     public float carRotation = new();
     public Vector2 carOrigin = new(50, 30);
-    float speed = 0.01f;
-    float maxSpeed = 1f;
-    Vector2 currentSpeed = Vector2.Zero;
-    float friction = 0.002f;
-
+    float speed;
+    float acceleration = 0.01f;
+    float maxSpeed = 20f;
+    Vector2 speedVector = Vector2.Zero;
+    float friction = 0.005f;
 
 
     private void Movement()
     {
-        if (Raylib.IsKeyDown(KeyboardKey.KEY_W))
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_W) && speed < maxSpeed)
         {
-            currentSpeed.X += speed;
-            currentSpeed.Y += speed;
+            speed += acceleration;
         }
 
-        if (Raylib.IsKeyDown(KeyboardKey.KEY_S))
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_S) && speed > -5)
         {
-            currentSpeed.X -= carDirection.X;
-            currentSpeed.Y -= carDirection.Y;
+            speed -= acceleration;
         }
 
-        if (currentSpeed.Length() > 0)
+        if (speedVector.Length() > 0)
         {
             if (Raylib.IsKeyDown(KeyboardKey.KEY_A))
             {
@@ -47,30 +45,35 @@ public class Player
                 }
             }
         }
-
-        // När rotationen ändras så ska riktningen bilen åker ändras,
+        if (speed > 0)
+        {
+            speed -= friction;
+        }
+        else if (speed < 0)
+        {
+            speed += friction;
+        }
 
         carDirection.Y = MathF.Sin((MathF.PI / 180) * carRotation);
         carDirection.X = MathF.Cos((MathF.PI / 180) * carRotation);
         
-        currentSpeed.X = carDirection.X;
-        currentSpeed.Y = carDirection.Y;
+        speedVector.X = carDirection.X * speed;
+        speedVector.Y = carDirection.Y * speed;
 
-        Console.WriteLine(carDirection);
-
+        Console.WriteLine(speed);
 
         if(Raylib.IsKeyDown(KeyboardKey.KEY_SPACE))
         {
-            currentSpeed = Vector2.Zero;
+            speed = 0;
         }
     }
 
     public void Update()
     {
         Movement();
-        car.X += currentSpeed.X * Raylib.GetFrameTime();
-        car.Y += currentSpeed.Y * Raylib.GetFrameTime();
-    
+        car.X += speedVector.X * Raylib.GetFrameTime();
+        car.Y += speedVector.Y * Raylib.GetFrameTime();
+
     }
 }
 
