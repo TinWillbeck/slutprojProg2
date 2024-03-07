@@ -1,57 +1,40 @@
 ﻿using System.Numerics;
 using Raylib_cs;
 
-
 Player p = new();
-
+Level l = new();
 Raylib.InitWindow(800,800, "TopDown Race");
-Raylib.BeginDrawing();
+Raylib.SetTargetFPS(60);
+
+Rectangle r = new();
+
+
 
 while (Raylib.WindowShouldClose() == false)
 {
     p.Update();
-    int [,] layout = 
-        {
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,1},
-            {1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,1},
-            {1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,1},
-            {1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,1},
-            {1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,1},
-            {1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},  
-        };
-        Raylib.ClearBackground(Color.WHITE);
-        Color color = Color.WHITE;
-        for (int x = 0; x < 16; x++)
-        {
-            for (int y = 0; y < 16; y++)
-            {
-                if(layout[y,x] == 0)
-                {
-                    color = Color.WHITE;
-                }
-                if(layout[y,x] == 1)
-                {
-                    color = Color.RED;
-                }
-                if(layout[y,x] == 2)
-                {
-                    color = Color.BLACK;
-                }
 
-                Raylib.DrawRectangle(x*50,y*50,50,50, color);
-            }
+    Raylib.BeginDrawing();
+    for (int i = 0; i < l.walls.Count; i++)
+    {
+        Raylib.DrawRectangleRec(l.walls[i], Color.RED);
+        if (Raylib.CheckCollisionRecs(p.car, l.walls[i]))
+        {
+            
         }
-        Raylib.DrawRectanglePro(p.car, p.carOrigin, p.carRotation, Color.GREEN);
+    }
+    for (int i = 0; i < l.sand.Count; i++)
+    {
+        Raylib.DrawRectangleRec(l.sand[i], Color.BEIGE);
+    }
+    for (int i = 0; i < l.track.Count; i++)
+    {
+        Raylib.DrawRectangleRec(l.track[i], Color.BLACK);
+    }
+    // Raylib.DrawRectangle(x*50,y*50,50,50, color);
+    Raylib.ClearBackground(Color.WHITE);
+    Raylib.DrawRectanglePro(p.car, p.CarOrigin(), p.CarRotation(), Color.GREEN);
     Raylib.EndDrawing();
 }
-Console.ReadLine();
+
+

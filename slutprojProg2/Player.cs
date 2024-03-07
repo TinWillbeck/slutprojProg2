@@ -3,15 +3,16 @@ using System.Security.Cryptography.X509Certificates;
 using Raylib_cs;
 public class Player
 {
-    public Rectangle car = new(60, 60, 100, 60);
+    public Rectangle car = new(150, 150, 50, 30);
     Vector2 carDirection = new();
-    public float carRotation = new();
-    public Vector2 carOrigin = new(50, 30);
+    float carRotation = new();
+    Vector2 carOrigin = new(25, 15);
     float speed;
-    float acceleration = 0.01f;
-    float maxSpeed = 20f;
+    float acceleration = 3f;
+    float maxSpeed = 100f;
+    float rotationSpeed = 4f;
     Vector2 speedVector = Vector2.Zero;
-    float friction = 0.005f;
+    float friction = 1.5f;
 
 
     private void Movement()
@@ -21,7 +22,7 @@ public class Player
             speed += acceleration;
         }
 
-        if (Raylib.IsKeyDown(KeyboardKey.KEY_S) && speed > -5)
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_S) && speed > -40)
         {
             speed -= acceleration;
         }
@@ -30,7 +31,7 @@ public class Player
         {
             if (Raylib.IsKeyDown(KeyboardKey.KEY_A))
             {
-                carRotation -= 0.1f;
+                carRotation -= rotationSpeed;
                 if (carRotation < 0)
                 {
                     carRotation += 360;
@@ -38,7 +39,7 @@ public class Player
             }
             if (Raylib.IsKeyDown(KeyboardKey.KEY_D))
             {
-                carRotation += 0.1f;
+                carRotation += rotationSpeed;
                 if (carRotation > 360)
                 {
                     carRotation -= 360;
@@ -60,12 +61,27 @@ public class Player
         speedVector.X = carDirection.X * speed;
         speedVector.Y = carDirection.Y * speed;
 
-        Console.WriteLine(speed);
+        // Console.WriteLine(speed);
 
         if(Raylib.IsKeyDown(KeyboardKey.KEY_SPACE))
         {
             speed = 0;
         }
+    }
+
+    public void Collision()
+    {
+        
+    }
+
+    public float CarRotation()
+    {
+        return carRotation;
+    }
+
+    public Vector2 CarOrigin()
+    {
+        return carOrigin;
     }
 
     public void Update()
