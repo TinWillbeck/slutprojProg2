@@ -3,17 +3,21 @@ using System.Security.Cryptography.X509Certificates;
 using Raylib_cs;
 public class Player
 {
-    public Rectangle car = new(150, 150, 50, 30);
+    Rectangle car = new(150, 150, 50, 30);
     Vector2 carDirection = new();
     float carRotation = new();
     Vector2 carOrigin = new(25, 15);
     float speed;
-    float acceleration = 3f;
-    float maxSpeed = 100f;
+    float acceleration;
+    float maxSpeed;
     float rotationSpeed = 4f;
     Vector2 speedVector = Vector2.Zero;
     float friction = 1.5f;
-
+    public Player(Engine engine)
+    {
+        acceleration = engine.GetAcceleration();
+        maxSpeed = engine.GetSpeed();
+    }
 
     private void Movement()
     {
@@ -57,13 +61,11 @@ public class Player
 
         carDirection.Y = MathF.Sin((MathF.PI / 180) * carRotation);
         carDirection.X = MathF.Cos((MathF.PI / 180) * carRotation);
-        
+
         speedVector.X = carDirection.X * speed;
         speedVector.Y = carDirection.Y * speed;
 
-        // Console.WriteLine(speed);
-
-        if(Raylib.IsKeyDown(KeyboardKey.KEY_SPACE))
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE))
         {
             speed = 0;
         }
@@ -71,7 +73,7 @@ public class Player
 
     public void Collision()
     {
-        
+
     }
 
     public float CarRotation()
@@ -82,6 +84,11 @@ public class Player
     public Vector2 CarOrigin()
     {
         return carOrigin;
+    }
+
+    public Rectangle GetPlayer()
+    {
+        return car;
     }
 
     public void Update()
