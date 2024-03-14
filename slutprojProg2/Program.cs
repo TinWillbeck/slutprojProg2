@@ -7,10 +7,6 @@ Level l = new();
 Raylib.InitWindow(800,800, "TopDown Race");
 Raylib.SetTargetFPS(60);
 
-Rectangle r = new();
-
-
-
 while (Raylib.WindowShouldClose() == false)
 {
     p.Update();
