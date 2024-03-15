@@ -2,7 +2,7 @@
 using Raylib_cs;
 
 
-Player p = new(new SmallEngine());
+Player p = new(new LargeEngine());
 Level l = new();
 Raylib.InitWindow(800,800, "TopDown Race");
 Raylib.SetTargetFPS(60);
@@ -15,15 +15,21 @@ while (Raylib.WindowShouldClose() == false)
     for (int i = 0; i < l.walls.Count; i++)
     {
         Raylib.DrawRectangleRec(l.walls[i], Color.RED);
-        if (Raylib.CheckCollisionRecs(p.GetPlayer(), l.walls[i]))
+
+        foreach (Vector2 corner in p.GetCorners())
         {
-            p.Collision();
+            if (Raylib.CheckCollisionPointRec(corner, l.walls[i]))
+            {
+                p.Collision();
+            }
         }
     }
+
     for (int i = 0; i < l.sand.Count; i++)
     {
         Raylib.DrawRectangleRec(l.sand[i], Color.BEIGE);
     }
+
     for (int i = 0; i < l.track.Count; i++)
     {
         Raylib.DrawRectangleRec(l.track[i], Color.BLACK);

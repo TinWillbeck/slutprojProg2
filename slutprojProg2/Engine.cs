@@ -1,7 +1,7 @@
 ﻿public abstract class Engine
 {
     protected float maxSpeed =  50;
-    protected float acceleration = 1.5f;
+    protected float acceleration = 1.7f;
     public float GetSpeed()
     {
         return maxSpeed;

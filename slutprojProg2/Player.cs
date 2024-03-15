@@ -17,6 +17,7 @@ public class Player
     {
         acceleration = engine.GetAcceleration();
         maxSpeed = engine.GetSpeed();
+
     }
 
     private void Movement()
@@ -65,15 +66,42 @@ public class Player
         speedVector.X = carDirection.X * speed;
         speedVector.Y = carDirection.Y * speed;
 
+
         if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE))
         {
-            speed = 0;
+            car.X = 400;
+            car.Y = 400;
         }
     }
 
+    public Vector2[] GetCorners()
+    {
+        Vector2 topRight = new()
+        {
+            X = car.X + carOrigin.Y / 1.5f * MathF.Cos(carRotation) - carOrigin.X / 1.5f * MathF.Sin(carRotation),
+            Y = car.Y + carOrigin.Y / 1.5f * MathF.Sin(carRotation) + carOrigin.X / 1.5f * MathF.Cos(carRotation)
+        };
+        Vector2 topLeft = new()
+        {
+            X = car.X - carOrigin.Y / 1.5f * MathF.Cos(carRotation) - carOrigin.X / 1.5f * MathF.Sin(carRotation),
+            Y = car.Y - carOrigin.Y / 1.5f * MathF.Sin(carRotation) + carOrigin.X / 1.5f * MathF.Cos(carRotation)
+        };
+        Vector2 bottomRight = new()
+        {
+            X = car.X + carOrigin.Y / 1.5f * MathF.Cos(carRotation) + carOrigin.X / 1.5f * MathF.Sin(carRotation),
+            Y = car.Y + carOrigin.Y / 1.5f * MathF.Sin(carRotation) - carOrigin.X / 1.5f * MathF.Cos(carRotation)
+        };
+        Vector2 bottomLeft = new()
+        {
+            X = car.X - carOrigin.Y / 1.5f * MathF.Cos(carRotation) + carOrigin.X / 1.5f * MathF.Sin(carRotation),
+            Y = car.Y - carOrigin.Y / 1.5f * MathF.Sin(carRotation) - carOrigin.X / 1.5f * MathF.Cos(carRotation)
+        };
+
+        return new Vector2[] {topLeft, topRight, bottomRight, bottomLeft};        
+    }
     public void Collision()
     {
-
+        speed -= speed * 2;
     }
 
     public float CarRotation()
