@@ -5,21 +5,23 @@ public class Player
 {
     Rectangle car = new(150, 150, 50, 30);
     Vector2 carDirection = new();
-    float carRotation = new();
+    float carRotation;
     Vector2 carOrigin = new(25, 15);
     float speed;
     float acceleration;
     float maxSpeed;
     float rotationSpeed = 4f;
     Vector2 speedVector = Vector2.Zero;
+    Tire tire;
     float friction = 1.5f;
     // konstruktor som gör att man kan sätta motor och annat när man instansierar player
-    public Player(Engine engine)
+    public Player(Engine engine, Tire t)
     {
         // sätter bilens accelerations och toppfartsvärden till motorns respektive värden
         acceleration = engine.GetAcceleration();
         maxSpeed = engine.GetSpeed();
 
+        this.tire = t;
     }
     // metod som har hand om bilens rörelse framåt
     private void Movement()
@@ -30,7 +32,7 @@ public class Player
             speed += acceleration;
         }
         // om man håller in S så accelererar bilen bakåt till en tredjededel av sin maxfart
-        if (Raylib.IsKeyDown(KeyboardKey.KEY_S) && speed > maxSpeed / 3)
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_S) && speed > -maxSpeed / 3)
         {
             speed -= acceleration;
         }
@@ -54,7 +56,7 @@ public class Player
 
     }
     // metod som roterar bilen
-    void GetRotation()
+    private void GetRotation()
     {
         // kollar om bilen rör på sig
         if (speedVector.Length() > 0)
@@ -62,7 +64,7 @@ public class Player
             // om man håller in A roteras bilen åt vänster
             if (Raylib.IsKeyDown(KeyboardKey.KEY_A))
             {
-                carRotation -= rotationSpeed;
+                carRotation -= tire.turnSpeed(speed);
                 if (carRotation < 0)
                 {
                     carRotation += 360;
@@ -71,7 +73,7 @@ public class Player
             // om man håller in D så roterar bilen åt höger
             if (Raylib.IsKeyDown(KeyboardKey.KEY_D))
             {
-                carRotation += rotationSpeed;
+                carRotation += tire.turnSpeed(speed);
                 if (carRotation > 360)
                 {
                     carRotation -= 360;
@@ -109,7 +111,7 @@ public class Player
     }
     public void Collision()
     {
-        speed -= speed * 2;
+        speed -= speed * 2 + 2;
     }
 
     public float CarRotation()

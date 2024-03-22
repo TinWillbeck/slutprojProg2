@@ -2,7 +2,7 @@
 using Raylib_cs;
 
 
-Player p = new(new LargeEngine());
+Player p = new(new LargeEngine(), new TestTire());
 Level l = new();
 Raylib.InitWindow(800,800, "TopDown Race");
 Raylib.SetTargetFPS(60);
