@@ -113,6 +113,10 @@ public class Player
     {
         speed -= speed * 2 + 2;
     }
+    public void SandCollision()
+    {
+        speed = maxSpeed / 3;
+    }
 
     public float CarRotation()
     {
