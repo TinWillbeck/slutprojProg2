@@ -10,7 +10,6 @@ public class Player
     float speed;
     float acceleration;
     float maxSpeed;
-    float rotationSpeed = 4f;
     Vector2 speedVector = Vector2.Zero;
     Tire tire;
     float friction = 1.5f;
@@ -109,39 +108,45 @@ public class Player
 
         return new Vector2[] { topLeft, topRight, bottomRight, bottomLeft };
     }
+    // metod som ger bilen en knuff i motsatt riktning när den körs
     public void Collision()
     {
         speed -= speed * 2 + 2;
     }
+    // metod som saktar ned bilen till en tredjedel av maxhastigheten
     public void SandCollision()
     {
         speed = maxSpeed / 3;
     }
-
+    // metod som returnerar bilens rotation
     public float CarRotation()
     {
         return carRotation;
     }
-
+    // metod som returnerar bilens origin
     public Vector2 CarOrigin()
     {
         return carOrigin;
     }
-
+    // metod som returnerar spelaren (rektangeln som är spelaren)
     public Rectangle GetPlayer()
     {
         return car;
     }
-
+    // metod som uppdaterar allt som rör sig typ
     public void Update()
     {
+        
         Movement();
+        // sätter bilens position till det som händer i movement
         car.X += speedVector.X * Raylib.GetFrameTime();
         car.Y += speedVector.Y * Raylib.GetFrameTime();
+        // om bilens hastighet är större än noll så saktas den ned konstant
         if (speed > 0)
         {
             speed -= friction;
         }
+        // om bilens hastighet är mindre än noll så saktas den ned konstant åt andra hållet
         else if (speed < 0)
         {
             speed += friction;
