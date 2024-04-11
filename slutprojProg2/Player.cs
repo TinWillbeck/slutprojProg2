@@ -10,6 +10,9 @@ public class Player
     float speed;
     float acceleration;
     float maxSpeed;
+    float maxSpeedSand;
+    float maxSpeedTrack;
+    bool isOnSand = false;
     Vector2 speedVector = Vector2.Zero;
     Tire tire;
     float friction = 1.5f;
@@ -18,13 +21,22 @@ public class Player
     {
         // sätter bilens accelerations och toppfartsvärden till motorns respektive värden
         acceleration = engine.GetAcceleration();
-        maxSpeed = engine.GetSpeed();
+        maxSpeedTrack = engine.GetSpeed();
+        maxSpeedSand = engine.GetSpeed() / t.getSandGrip();
 
         this.tire = t;
     }
     // metod som har hand om bilens rörelse framåt
     private void Movement()
     {
+        if (isOnSand == true)
+        {
+            maxSpeed = maxSpeedSand;
+        }
+        else if (isOnSand == false)
+        {
+            maxSpeed = maxSpeedTrack;
+        }
         // om man håller in W så accelererar bilen upp till sin toppfart
         if (Raylib.IsKeyDown(KeyboardKey.KEY_W) && speed < maxSpeed)
         {
@@ -57,8 +69,8 @@ public class Player
     // metod som roterar bilen
     private void GetRotation()
     {
-        // kollar om bilen rör på sig
-        if (speedVector.Length() > 0)
+        // kollar om bilen rör på sig med lite marginal för att den inte alltid står helt stilla
+        if (speedVector.Length() > 1)
         {
             // om man håller in A roteras bilen åt vänster
             if (Raylib.IsKeyDown(KeyboardKey.KEY_A))
@@ -113,10 +125,15 @@ public class Player
     {
         speed -= speed * 2 + 2;
     }
-    // metod som saktar ned bilen till en tredjedel av maxhastigheten
+    // metod som sötter isOnSand till true
     public void SandCollision()
     {
-        speed = maxSpeed / 3;
+        isOnSand = true;
+    }
+    // metod som sätter isOnSand till false
+    public void TrackCollision()
+    {
+        isOnSand = false;
     }
     // metod som returnerar bilens rotation
     public float CarRotation()
@@ -151,7 +168,7 @@ public class Player
         {
             speed += friction;
         }
-
+        Console.WriteLine(speedVector.Length());
     }
 }
 

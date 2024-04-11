@@ -1,4 +1,5 @@
 ﻿using Raylib_cs;
+using System.ComponentModel.DataAnnotations;
 using System.Numerics;
 
 public class GameManager
@@ -38,6 +39,15 @@ public class GameManager
                 if (Raylib.CheckCollisionPointRec(corner, sand))
                 {
                     p.SandCollision();
+                }
+            }
+            // går igenom alla track
+            foreach (Rectangle track in l.track)
+            {
+                // om en sand och ett av bilens hörn överlappar så körs spelarens sandkollision
+                if (Raylib.CheckCollisionPointRec(corner, track))
+                {
+                    p.TrackCollision();
                 }
             }
         }
