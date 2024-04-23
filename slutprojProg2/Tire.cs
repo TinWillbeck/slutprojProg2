@@ -9,8 +9,8 @@ public abstract class Tire
 
     public float turnSpeed(float speed)
     {
-        // medans speed inte är noll 
-        if (speed != 0)
+        // medans speed är mer/ lika med 10
+        if (speed >= 10)
         {
             // sätt rotationspeed till maxrotation delat med speed gånger dropoffrate, detta för att rotationspeed ska minska när speed ökar
             // rotationspeed clampas för att det hände ibland att det delades med noll och spelet pajade
@@ -54,7 +54,7 @@ class GoodTire : Tire
 {
     public GoodTire()
     {
-        maxRotation = 10;
+        maxRotation = 15;
         dropoffRate = 5;
         sandGripVar = 2;
     }
