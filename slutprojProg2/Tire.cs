@@ -7,7 +7,7 @@ public abstract class Tire
     protected float sandGripVar = 3;
     protected float rotationSpeed;
 
-    public float turnSpeed(float speed)
+    public float TurnSpeed(float speed)
     {
         // medans speed är mer/ lika med 10
         if (speed >= 10)
@@ -19,7 +19,7 @@ public abstract class Tire
         }
         return rotationSpeed;
     }
-    public float getSandGrip()
+    public float GetSandGrip()
     {
         return sandGripVar;
     }

@@ -22,7 +22,7 @@ public class Player
         // sätter bilens accelerations och toppfartsvärden till motorns respektive värden
         acceleration = engine.GetAcceleration();
         maxSpeedTrack = engine.GetSpeed();
-        maxSpeedSand = engine.GetSpeed() / t.getSandGrip();
+        maxSpeedSand = engine.GetSpeed() / t.GetSandGrip();
 
         this.tire = t;
     }
@@ -75,7 +75,7 @@ public class Player
             // om man håller in A roteras bilen åt vänster
             if (Raylib.IsKeyDown(KeyboardKey.KEY_A))
             {
-                carRotation -= tire.turnSpeed(speed);
+                carRotation -= tire.TurnSpeed(speed);
                 if (carRotation < 0)
                 {
                     carRotation += 360;
@@ -84,7 +84,7 @@ public class Player
             // om man håller in D så roterar bilen åt höger
             if (Raylib.IsKeyDown(KeyboardKey.KEY_D))
             {
-                carRotation += tire.turnSpeed(speed);
+                carRotation += tire.TurnSpeed(speed);
                 if (carRotation > 360)
                 {
                     carRotation -= 360;
@@ -96,7 +96,7 @@ public class Player
     // metod som räknar ut bilens hörn och lägger in dem i en lista med vektorer
     public Vector2[] GetCorners()
     {
-        // vektorns X 
+        // vektorns 
         Vector2 topRight = new()
         {
             X = car.X + carOrigin.Y / 1.5f * MathF.Cos(carRotation) - carOrigin.X / 1.5f * MathF.Sin(carRotation),
