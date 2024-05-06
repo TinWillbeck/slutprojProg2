@@ -24,7 +24,7 @@ public class GameManager
         foreach (Vector2 corner in p.GetCorners())
         {
             // går igenom alla väggar
-            foreach (Rectangle wall in l.walls)
+            foreach (Rectangle wall in l.Walls)
             {
                 // om en vägg och ett av bilens hörn överlappar körs spelarens kollision
                 if (Raylib.CheckCollisionPointRec(corner, wall))
@@ -33,7 +33,7 @@ public class GameManager
                 }
             }
             // går igenom alla sand
-            foreach (Rectangle sand in l.sand)
+            foreach (Rectangle sand in l.Sand)
             {
                 // om en sand och ett av bilens hörn överlappar så körs spelarens sandkollision
                 if (Raylib.CheckCollisionPointRec(corner, sand))
@@ -42,7 +42,7 @@ public class GameManager
                 }
             }
             // går igenom alla track
-            foreach (Rectangle track in l.track)
+            foreach (Rectangle track in l.Track)
             {
                 // om en sand och ett av bilens hörn överlappar så körs spelarens sandkollision
                 if (Raylib.CheckCollisionPointRec(corner, track))
@@ -59,21 +59,21 @@ public class GameManager
 
         Raylib.BeginDrawing();
         // ritar ut alla väggar
-        for (int i = 0; i < l.walls.Count; i++)
+        for (int i = 0; i < l.Walls.Count; i++)
         {
-            Raylib.DrawRectangleRec(l.walls[i], Color.RED);
+            Raylib.DrawRectangleRec(l.Walls[i], Color.RED);
         }
 
         // ritar ut all sand
-        for (int i = 0; i < l.sand.Count; i++)
+        for (int i = 0; i < l.Sand.Count; i++)
         {
-            Raylib.DrawRectangleRec(l.sand[i], Color.BEIGE);
+            Raylib.DrawRectangleRec(l.Sand[i], Color.BEIGE);
         }
 
         // ritar ut all asfalt
-        for (int i = 0; i < l.track.Count; i++)
+        for (int i = 0; i < l.Track.Count; i++)
         {
-            Raylib.DrawRectangleRec(l.track[i], Color.BLACK);
+            Raylib.DrawRectangleRec(l.Track[i], Color.BLACK);
         }
         // ritar bakgrunden (inte så nödvändigt kanske)
         Raylib.ClearBackground(Color.WHITE);

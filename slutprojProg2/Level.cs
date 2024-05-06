@@ -1,9 +1,9 @@
 ﻿using Raylib_cs;
 public class Level
 {
-    public List<Rectangle> walls = new();
-    public List<Rectangle> sand = new();
-    public List<Rectangle> track = new();
+    public List<Rectangle> Walls {get; set;} = new();
+    public List<Rectangle> Sand {get; set;} = new();
+    public List<Rectangle> Track {get; set;} = new();
 
     public Level()
     {
@@ -35,17 +35,17 @@ public class Level
                 if(layout[y,x] == 0)
                 {
                     Rectangle s = new(x * 50,y * 50, 50, 50);
-                    sand.Add(s);
+                    Sand.Add(s);
                 }
                 if(layout[y,x] == 1)
                 {
                     Rectangle w = new(x * 50,y * 50, 50, 50);
-                    walls.Add(w);
+                    Walls.Add(w);
                 }
                 if(layout[y,x] == 2)
                 {
                     Rectangle t = new(x * 50,y * 50, 50, 50);
-                    track.Add(t);
+                    Track.Add(t);
                 }
             }
         }
